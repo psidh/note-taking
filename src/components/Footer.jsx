@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <div className='flex justify-between py-16 px-10 bg-white'>
+    <div className='flex justify-between py-16 px-10 bg-white  dark:bg-black dark:text-white'>
       <div>
         <h1>© Task Tracker | 2024 All Rights Reserved</h1>
       </div>

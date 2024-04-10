@@ -1,7 +1,7 @@
 
 export default function Header() {
   return (
-    <div className='flex justify-between p-12 bg-white'>
+    <div className='flex justify-between p-12 bg-white  dark:bg-black dark:text-white'>
       <div>
         <h1 className='text-2xl font-semibold'>Todo App</h1>
       </div>
