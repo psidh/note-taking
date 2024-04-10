@@ -20,7 +20,7 @@ export default function AddTodo() {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = () => {
+  const addTodo = (event) => {
     if (todoText.trim() !== '') {
       setTodos([...todos, todoText]);
       setTodoText('');
@@ -43,7 +43,7 @@ export default function AddTodo() {
   };
 
   const confirmDeleteAll = () => {
-    setTodos([]); 
+    setTodos([]);
     setShowPopUp(false);
   };
 
@@ -62,7 +62,8 @@ export default function AddTodo() {
           focus:outline-none'
         />
         <button
-          onClick={addTodo}
+          onClick={(e) => addTodo(e)}
+          variant='contained'
           className='add py-3 px-8 rounded-xl bg-black text-white w-full mt-3'
         >
           Add It To The List
@@ -72,12 +73,12 @@ export default function AddTodo() {
         <p>Task List</p>
         <button onClick={deleteAll}>Clear All</button>
       </div>
-      <div className='h-[1px] bg-[#dbdbdb] w-[400px] mt-2'></div>
+      <div className='h-[1px] bg-[#dbdbdb] w-[400px] mt-2 mb-6'></div>
       <ul className='w-[400px]'>
         {todos.map((todo, index) => (
           <div
             key={index}
-            className={`flex justify-between items-center mt-12 space-x-4 py-2 border border-[#dbdbdb] rounded-xl ${
+            className={`flex justify-between items-center my-3 space-x-4 py-2 border border-[#dbdbdb] rounded-xl ${
               index === deletingIndex ? 'fade-out' : ''
             }`}
           >
@@ -104,14 +105,24 @@ export default function AddTodo() {
           </div>
         ))}
         {showPopup && (
-        <div className='flex items-center justify-between mt-12 z-10 bg-opacity-90'>
-          <p>Do you want to clear all todos?</p>
-          <div>
-          <button onClick={confirmDeleteAll} className='bg-red-500 px-3 py-2 rounded-3xl text-white'>Yes</button>
-          <button onClick={deleteAll} className='bg-[#dbdbdb] px-3 py-2 rounded-3xl ml-2'>No</button>
+          <div className='flex items-center justify-between mt-12 z-10 bg-opacity-90'>
+            <p>Do you want to clear all todos?</p>
+            <div>
+              <button
+                onClick={confirmDeleteAll}
+                className='bg-red-500 px-3 py-2 rounded-3xl text-white'
+              >
+                Yes
+              </button>
+              <button
+                onClick={deleteAll}
+                className='bg-[#dbdbdb] px-3 py-2 rounded-3xl ml-2'
+              >
+                No
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </ul>
     </div>
   );
