@@ -48,7 +48,7 @@ export default function AddTodo() {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center p-8 bg-white'>
+    <div className='flex flex-col items-center justify-center p-8 bg-white dark:bg-black dark:text-white'>
       <div className='flex flex-col items-center justify-center w-[400px]'>
         <input
           rows={1}
@@ -58,13 +58,13 @@ export default function AddTodo() {
           onChange={(e) => setTodoText(e.target.value)}
           placeholder='Enter Your Task'
           title='todo'
-          className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] w-full
+          className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] dark:bg-[#202020] w-full
           focus:outline-none'
         />
         <button
           onClick={(e) => addTodo(e)}
           variant='contained'
-          className='add py-3 px-8 rounded-xl bg-black text-white w-full mt-3'
+          className='add py-3 px-8 rounded-xl bg-black dark:bg-white dark:text-black text-white w-full mt-3'
         >
           Add It To The List
         </button>
