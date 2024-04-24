@@ -65,10 +65,9 @@ export default function AddTodo() {
             type='text'
             value={todoText}
             onKeyDown={(event)=>{
-              if (event.key === 'Enter') {
-                addTodo();
+              if(event.key === 'Enter'){
+                addTodo()
               }
-            
             }}
             onChange={(e) => setTodoText(e.target.value)}
             placeholder='Enter Your Task'
