@@ -64,10 +64,17 @@ export default function AddTodo() {
             cols={25}
             type='text'
             value={todoText}
+            onKeyDown={(event)=>{
+              if (event.key === 'Enter') {
+                addTodo();
+              }
+            
+            }}
             onChange={(e) => setTodoText(e.target.value)}
             placeholder='Enter Your Task'
             title='todo'
-            className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] dark:bg-[#202020] w-full focus:outline-none'
+            className='py-3 px-8 rounded-xl text-[#6c6c6c] dark:text-white bg-[#dedede] dark:bg-[#202020] w-full
+          focus:outline-none'
           />
           <select
             value={todoDate}
