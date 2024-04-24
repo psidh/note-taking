@@ -24,11 +24,11 @@ export default function AddTodo() {
     if (todoText.trim() !== '') {
       let date = new Date();
       if (todoDate === 'tomorrow') {
-        date.setDate(date.getDate() + 1);
+        date.setDate('tomorrow');
       } else if (todoDate === 'dayAfterTomorrow') {
-        date.setDate(date.getDate() + 2);
+        date.setDate('dayAfterTomorrow');
       } else if (todoDate === 'overmorrow') {
-        date.setDate(date.getDate() + 3);
+        date.setDate('overmorrow');
       }
       setTodos([...todos, { text: todoText, date: date.toDateString() }]);
       setTodoText('');
