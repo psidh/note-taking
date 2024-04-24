@@ -5,7 +5,7 @@ import { LuDelete } from 'react-icons/lu';
 export default function AddTodo() {
   const [todos, setTodos] = useState([]);
   const [todoText, setTodoText] = useState('');
-  const [todoDate, setTodoDate] = useState('today'); // Default to 'today'
+  const [todoDate, setTodoDate] = useState('Today'); // Default to 'today'
   const [deletingIndex, setDeletingIndex] = useState(null);
   const [showPopup, setShowPopUp] = useState(false);
 
@@ -24,11 +24,11 @@ export default function AddTodo() {
     if (todoText.trim() !== '') {
       let date = new Date();
       if (todoDate === 'tomorrow') {
-        setTodoDate('tomorrow');
+        setTodoDate('Tomorrow');
       } else if (todoDate === 'dayAfterTomorrow') {
-        setTodoDate('dayAfterTomorrow');
-      } else if (todoDate === 'overmorrow') {
-        setTodoDate('overmorrow');
+        setTodoDate('Day After Tomorrow');
+      } else {
+        setTodoDate('Today');
       }
       setTodos([...todos, { text: todoText, date: todoDate }]);
       setTodoText('');
@@ -83,7 +83,6 @@ export default function AddTodo() {
             <option value='today'>Today</option>
             <option value='tomorrow'>Tomorrow</option>
             <option value='dayAfterTomorrow'>Day After Tomorrow</option>
-            <option value='overmorrow'>Overmorrow</option>
           </select>
         </div>
         <button
