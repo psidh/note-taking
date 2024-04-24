@@ -1,11 +1,12 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { LuDelete } from 'react-icons/lu';
-// import '../styles/custom.css';
 
 export default function AddTodo() {
   const [todos, setTodos] = useState([]);
   const [todoText, setTodoText] = useState('');
+  const [todoDate, setTodoDate] = useState('');
+  const [data, setDate] = useState(null);
   const [deletingIndex, setDeletingIndex] = useState(null);
   const [showPopup, setShowPopUp] = useState(false);
 
@@ -21,15 +22,16 @@ export default function AddTodo() {
   }, [todos]);
 
   const addTodo = (event) => {
-    if (todoText.trim() !== '') {
-      setTodos([...todos, todoText]);
+    if (todoText.trim() !== '' && todoDate.trim() !== '') {
+      setTodos([...todos, { text: todoText, date: todoDate }]);
       setTodoText('');
+      setTodoDate('');
     }
   };
 
-  const updateTodo = (index, newText) => {
+  const updateTodo = (index, newText, newDate) => {
     const updatedTodos = [...todos];
-    updatedTodos[index] = newText;
+    updatedTodos[index] = { text: newText, date: newDate };
     setTodos(updatedTodos);
   };
 
@@ -42,27 +44,62 @@ export default function AddTodo() {
     setShowPopUp(!showPopup);
   };
 
+  const handleKeyDown = (e) => {
+    if (e.code === 'Enter') {
+      triggerBusqueda(e.target.value);
+    }
+  };
+
   const confirmDeleteAll = () => {
     setTodos([]);
     setShowPopUp(false);
   };
 
+  const [enter, setEnter] = useState(false);
+  useEffect(() => {
+    document.addEventListener('keydown', enterTodo, true);
+  }, []);
+
+  
+  const enterTodo = (event) => {
+    if (event.key === 'Enter') {
+      console.log(event.key);
+      if (todoText.trim() !== '' && todoDate.trim() !== '') {
+        setTodos([...todos, { text: todoText, date: todoDate }]);
+        setTodoText('');
+        setTodoDate('');
+      }
+    }
+  };
+
+
+
   return (
     <div className='flex flex-col items-center justify-center p-8 bg-white dark:bg-black dark:text-white'>
       <div className='flex flex-col items-center justify-center w-[400px]'>
-        <input
-          rows={1}
-          cols={25}
-          type='text'
-          value={todoText}
-          onChange={(e) => setTodoText(e.target.value)}
-          placeholder='Enter Your Task'
-          title='todo'
-          className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] dark:bg-[#202020] w-full
+        <div className='flex flex-col  md:flex-row justify-between items-center space-x-2'>
+          <input
+            rows={1}
+            cols={25}
+            type='text'
+            value={todoText}
+            onChange={(e) => setTodoText(e.target.value)}
+            placeholder='Enter Your Task'
+            title='todo'
+            className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] dark:bg-[#202020] w-full
           focus:outline-none'
-        />
+          />
+          <input
+            type='date'
+            value={todoDate}
+            onChange={(e) => setTodoDate(e.target.value)}
+            className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] dark:bg-[#202020] w-full
+          focus:outline-none'
+          />
+        </div>
         <button
           onClick={(e) => addTodo(e)}
+          onKeyDown={handleKeyDown}
           variant='contained'
           className='add py-3 px-8 rounded-xl bg-black dark:bg-white dark:text-black text-white w-full mt-3'
         >
@@ -78,29 +115,28 @@ export default function AddTodo() {
         {todos.map((todo, index) => (
           <div
             key={index}
-            className={`flex justify-between items-center my-3 space-x-4 py-2 border border-[#dbdbdb] rounded-xl ${
+            className={`flex justify-between items-center my-3 w-full  py-2 border border-[#dbdbdb] rounded-xl ${
               index === deletingIndex ? 'fade-out' : ''
             }`}
           >
             <input
               type='text'
-              value={todo}
-              className='py-2 pl-4 bg-transparent focus:outline-none text-xl'
-              onChange={(e) => updateTodo(index, e.target.value)}
+              value={todo.text}
+              className='py-2 pl-4 bg-transparent focus:outline-none text-xl text-wrap inline-block w-1/2'
+              onChange={(e) => updateTodo(index, e.target.value, todo.date)}
             />
-            <div className='mr-2'>
-              <div className='p-[9px] bg-[#ff3737] rounded-lg text-white mr-4'>
-                <LuDelete
-                  onClick={() => {
-                    setDeletingIndex(index); // Set the index of the item being deleted
-                    setTimeout(() => {
-                      deleteTodo(index); // Delete the item after the animation
-                      setDeletingIndex(null); // Reset the deletingIndex state
-                    }, 600); // Wait for the animation duration
-                  }}
-                  className='text-xl cursor-pointer'
-                />
-              </div>
+            <h1>{todo.date}</h1>
+            <div className='p-[9px] bg-[#ff3737] rounded-lg text-white mr-4 '>
+              <LuDelete
+                onClick={() => {
+                  setDeletingIndex(index); // Set the index of the item being deleted
+                  setTimeout(() => {
+                    deleteTodo(index); // Delete the item after the animation
+                    setDeletingIndex(null); // Reset the deletingIndex state
+                  }, 600); // Wait for the animation duration
+                }}
+                className='text-xl cursor-pointer'
+              />
             </div>
           </div>
         ))}
