@@ -22,7 +22,7 @@ export default function AddTodo() {
   }, [todos]);
 
   const addTodo = (event) => {
-    if (todoText.trim() !== '' && todoDate.trim() !== '') {
+    if (todoText.trim() !== '') {
       setTodos([...todos, { text: todoText, date: todoDate }]);
       setTodoText('');
       setTodoDate('');
@@ -56,15 +56,13 @@ export default function AddTodo() {
   };
 
   const [enter, setEnter] = useState(false);
-  useEffect(() => {
-    document.addEventListener('keydown', enterTodo, true);
-  }, []);
+
 
   
   const enterTodo = (event) => {
     if (event.key === 'Enter') {
       console.log(event.key);
-      if (todoText.trim() !== '' && todoDate.trim() !== '') {
+      if (todoText.trim() !== '') {
         setTodos([...todos, { text: todoText, date: todoDate }]);
         setTodoText('');
         setTodoDate('');
@@ -83,10 +81,11 @@ export default function AddTodo() {
             cols={25}
             type='text'
             value={todoText}
+            onKeyDown={enterTodo}
             onChange={(e) => setTodoText(e.target.value)}
             placeholder='Enter Your Task'
             title='todo'
-            className='py-3 px-8 rounded-xl text-[#6c6c6c] bg-[#dedede] dark:bg-[#202020] w-full
+            className='py-3 px-8 rounded-xl text-[#6c6c6c] dark:text-white bg-[#dedede] dark:bg-[#202020] w-full
           focus:outline-none'
           />
           <input
